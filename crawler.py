@@ -2,6 +2,9 @@ import requests
 from bs4 import BeautifulSoup
 import json
 import time
+
+MAJOR = ""
+
 def get_page_content(url):
     """Get html from url"""
     try:
@@ -74,6 +77,7 @@ def get_page_content(url):
 
 def get_content_from_major(major):
     # page = 0
+    MAJOR = major
     url = f"https://thuvienphapluat.vn/hoi-dap-phap-luat/{major}?page="
     for page in range(1,120):
         url = url + str(page)
@@ -94,7 +98,7 @@ def get_content_from_major(major):
                 page_content['domain'] = major
                 page_content['url'] = link['href']
                 page_content['crawled_date'] = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) 
-                with open("./data_qa_new_1.jsonl", "a", encoding="utf-8") as f:
+                with open(f"./data_qa_new_{major}.jsonl", "a", encoding="utf-8") as f:
                     f.write(json.dumps(page_content, ensure_ascii=False) + "\n")
                     
         url = f"https://thuvienphapluat.vn/hoi-dap-phap-luat/{major}?page="
