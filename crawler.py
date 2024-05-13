@@ -106,9 +106,13 @@ def get_content_from_category(category):
     for page in range(1,100):
         url = url + str(page)
         print(url)
-        page_links = requests.get(url)
-        soup = BeautifulSoup(page_links.text, 'html.parser')
-        links = soup.find_all('a', class_='title-link')
+        try:
+            page_links = requests.get(url)
+            soup = BeautifulSoup(page_links.text, 'html.parser')
+            links = soup.find_all('a', class_='title-link')
+        except Exception as e:
+            print(e)
+            continue
         
         if len(links) == 0:
             break
@@ -144,8 +148,8 @@ categories = ['kinh-doanh-van-tai', 'nghia-vu-quan-su', 'thua-ke', 'thue-gia-tri
               'giay-khai-sinh', 'vung-nuoc-cang-bien',  'ngach-cong-chuc']
 
 
-for major in majors:
-    get_content_from_major(major)
+# for major in majors:
+#     get_content_from_major(major)
 
 for category in categories:
     get_content_from_category(category)
