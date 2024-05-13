@@ -11,6 +11,10 @@ def get_page_content(url):
             soup = BeautifulSoup(page_content.text, 'html.parser')
 
             item = {}
+            #get date
+            date = soup.find('span', class_='news-time')
+            if date:
+                item['published_date'] = date.text.strip()
             # Get title
             title = soup.find('h1', class_='title')
             if title:
@@ -71,11 +75,7 @@ def get_page_content(url):
 def get_content_from_major(major):
     # page = 0
     url = f"https://thuvienphapluat.vn/hoi-dap-phap-luat/{major}?page="
-    if major == "tien-te-ngan-hang":
-        start_page = 154
-    else:
-        start_page = 1
-    for page in range(start_page,100):
+    for page in range(1,120):
         url = url + str(page)
         print(url)
         page_links = requests.get(url)
@@ -91,7 +91,10 @@ def get_content_from_major(major):
             time.sleep(1.5)
             page_content = get_page_content(link['href'])
             if page_content != {}:
-                with open("./data_qa_new.jsonl", "a", encoding="utf-8") as f:
+                page_content['domain'] = major
+                page_content['url'] = link['href']
+                page_content['crawled_date'] = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) 
+                with open("./data_qa_new_1.jsonl", "a", encoding="utf-8") as f:
                     f.write(json.dumps(page_content, ensure_ascii=False) + "\n")
                     
         url = f"https://thuvienphapluat.vn/hoi-dap-phap-luat/{major}?page="
@@ -106,13 +109,9 @@ def get_content_from_category(category):
     for page in range(1,100):
         url = url + str(page)
         print(url)
-        try:
-            page_links = requests.get(url)
-            soup = BeautifulSoup(page_links.text, 'html.parser')
-            links = soup.find_all('a', class_='title-link')
-        except Exception as e:
-            print(e)
-            continue
+        page_links = requests.get(url)
+        soup = BeautifulSoup(page_links.text, 'html.parser')
+        links = soup.find_all('a', class_='title-link')
         
         if len(links) == 0:
             break
@@ -122,6 +121,9 @@ def get_content_from_category(category):
             time.sleep(1.5)
             page_content = get_page_content(link['href'])
             if page_content != {}:
+                page_content['domain'] = category
+                page_content['url'] = link['href']
+                page_content['crawled_date'] = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) 
                 with open("./data_qa_new.jsonl", "a", encoding="utf-8") as f:
                     f.write(json.dumps(page_content, ensure_ascii=False) + "\n")
                     
@@ -148,11 +150,11 @@ categories = ['kinh-doanh-van-tai', 'nghia-vu-quan-su', 'thua-ke', 'thue-gia-tri
               'giay-khai-sinh', 'vung-nuoc-cang-bien',  'ngach-cong-chuc']
 
 
-# for major in majors:
-#     get_content_from_major(major)
+for major in majors:
+    get_content_from_major(major)
 
-for category in categories:
-    get_content_from_category(category)
+# for category in categories:
+#     get_content_from_category(category)
 
 
     
