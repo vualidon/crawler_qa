@@ -141,10 +141,11 @@ def get_content_from_category(category):
 
 # get_content_from_major("tien-te-ngan-hang")
 
-majors = ['tien-te-ngan-hang', 'quyen-dan-su','chung-khoan', 'so-huu-tri-tue', 'tai-chinh-nha-nuoc',
-          'thu-tuc-to-tung', 'the-thao-y-te', 'giao-thong-van-tai', 'xuat-nhap-khau', 'doanh-nghiep',
-          'lao-dong-tien-luong', 'bat-dong-san', 'vi-pham-hanh-chinh', 'bao-hiem', 'van-hoa-xa-hoi',
-          'thuong-mai', 'trach-nhiem-hinh-su', 'xay-dung-do-thi', 'ke-toan-kiem-toan', 'thue-phi-le-phi',
+majors = [#'tien-te-ngan-hang', 'quyen-dan-su','chung-khoan', 'so-huu-tri-tue', 'tai-chinh-nha-nuoc',
+          #'thu-tuc-to-tung', 'the-thao-y-te', 'giao-thong-van-tai', 'xuat-nhap-khau', 'doanh-nghiep',
+          #'lao-dong-tien-luong', 'bat-dong-san', 'vi-pham-hanh-chinh', 'bao-hiem', 'van-hoa-xa-hoi',
+          #'thuong-mai', 
+	'trach-nhiem-hinh-su', 'xay-dung-do-thi', 'ke-toan-kiem-toan', 'thue-phi-le-phi',
           'dau-tu', 'dich-vu-phap-ly', 'tai-nguyen-moi-truong', 'cong-nghe-thong-tin', 'giao-duc',
           'bo-may-hanh-chinh', 'linh-vuc-khac']
 
